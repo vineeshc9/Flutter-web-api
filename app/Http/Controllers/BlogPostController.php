@@ -15,8 +15,8 @@ class BlogPostController extends Controller
      */
     public function index()
     {
-        $blogPost = BlogPost::all();
-        return view('blog.index' , compact('blogPost'));
+        $blogPosts = BlogPost::all();
+        return view('blog.index' , compact('blogPosts'));
     }
 
     /**
@@ -80,9 +80,9 @@ class BlogPostController extends Controller
      */
     public function edit($id)
     {
-        $blogPost= BlogPost::find($id);
+        $blogPosts= BlogPost::find($id);
         $category = Category::all();
-        return view('blog.edit', compact('blogPost', 'category'));
+        return view('blog.edit', compact('blogPosts', 'category'));
     }
 
     /**
@@ -92,9 +92,29 @@ class BlogPostController extends Controller
      * @param  \App\Models\BlogPost  $blogPost
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogPost $blogPost)
+    public function update(Request $request, $id)
     {
-        //
+        $blogPost =  BlogPost::find($id);
+        $blogPost -> title = $request -> input('blogTitle');
+        $blogPost -> details = $request -> input('blogDetails');
+        $blogPost -> category_id = $request -> input('category');
+        $blogPost -> userid = 0;
+        if($blogPost-> save()){
+            $photo = $request->file('featuredPhoto');
+            if($photo != null){
+                $ext = $photo-> getClientOriginalExtension();
+                $fileName = rand(1000, 5000).'.'.$ext;
+                if($ext =='jpg' || $ext == 'png'){
+                    if($photo ->move(public_path(), $fileName)){
+                        $blogPost = BlogPost::find($blogPost -> id);
+                        $blogPost-> featured_image_url = url('/').'/'.$fileName;
+                        $blogPost->save();
+                    }
+                }
+            }
+            return redirect()->back()->with('Success', 'Successfully Updated Blog Post');
+        }
+        return redirect()->back()->with('Failed', 'Failed to Update Blog Post');
     }
 
     /**
@@ -103,8 +123,11 @@ class BlogPostController extends Controller
      * @param  \App\Models\BlogPost  $blogPost
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BlogPost $blogPost)
+    public function destroy($id)
     {
-        //
+        if(BlogPost::destroy($id)){
+            return redirect()->back()->with('Deleted', 'Deleted Record Successfully');
+        }
+        return redirect()->back()->with('Failed', 'Could not delete record');
     }
 }

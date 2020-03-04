@@ -26,5 +26,7 @@ Route::get('get-blopost-form','BlogPostController@create');
 Route::post('store-blog-post', 'BlogPostController@store');
 Route::get('all-blog-post','BlogPostController@index');
 Route::get('edit-blog-post/{id}', 'BlogPostController@edit' );
+Route::post('update-blog-post/{id}','BlogPostController@update');
+Route::get('delete-blog-post/{id}','BlogPostController@destroy');
 
 

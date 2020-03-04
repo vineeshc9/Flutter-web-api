@@ -47,15 +47,15 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($blogPost as $blog )
+                    @foreach ($blogPosts as $blogPost )
                     <tr>
-                        <td>{{$blog-> title}}</td>
-                        <td>{{$blog-> details}}</td>
-                        <td> <img src="{{$blog-> featured_image_url}}" width="100" height="100" alt=""></td>
+                        <td>{{$blogPost-> title}}</td>
+                        <td>{{$blogPost-> details}}</td>
+                        <td> <img src="{{$blogPost-> featured_image_url}}" width="100" height="100" alt=""></td>
                         <td>
-                        <a href="{{URL::to('edit-blog-post')}}/{{$blog-> id}}" class="btn btn-primary btn-sm"> Edit </a> 
+                        <a href="{{URL::to('edit-blog-post')}}/{{$blogPost-> id}}" class="btn btn-primary btn-sm"> Edit </a> 
 
-                        <a href="{{URL::to('delete-blog-post')}}/{{$blog -> id}}" onclick="checkDelete()" class="btn btn-danger btn-sm" > Delete </a>
+                        <a href="{{URL::to('delete-blog-post')}}/{{$blogPost -> id}}" onclick="checkDelete()" class="btn btn-danger btn-sm" > Delete </a>
                         </td>
                         
                     </tr>

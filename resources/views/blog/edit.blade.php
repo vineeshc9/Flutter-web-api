@@ -1,7 +1,7 @@
 @extends('layout')
 @section('dashboard-content')
 <main>
-  <div class="container-fluid">
+<div class="container-fluid">
 <h1 class="mt-4">Update Blog Post Form</h1>
 
 
@@ -24,17 +24,17 @@
         </div>
     @endif
 
-<form action="{{URL:: to('store-blog-post')}}" method="POST" enctype="multipart/form-data">
+<form action="{{URL:: to('update-blog-post')}}/{{$blogPosts -> id}}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="form-group">
     <label for="exampleInputEmail1">Blog Title</label>
-    <input type="text" name="blogTitle" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Blog Title">
+    <input type="text" name="blogTitle" value="{{$blogPosts -> title}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Blog Title">
     <small id="emailHelp" class="form-text text-muted">Insert a Category name.</small>
     </div>
 
     <div class="form-group">
         <label for="exampleInputEmail1">Blog Details</label>
-        <textarea  class="form-control" id="editor1" name="blogDetails"></textarea>
+    <textarea  class="form-control" id="editor1" name="blogDetails">{{$blogPosts -> details}}</textarea>
         <small id="emailHelp" class="form-text text-muted">Insert Blog Text.</small>
         </div>
 
@@ -42,8 +42,8 @@
             <label for="exampleInputEmail1">Select Category</label>
             <select class="form-control" name="category">
                 <option>Select Text</option>
-                @foreach ($catagories as $category )
-                    <option value="{{$category -> id}} "> {{$category -> name}}</option>
+                @foreach ($category as $categories )
+                    <option value="{{$categories -> id}} "  @if($categories -> id == $blogPosts-> category_id) selected @endif> {{$categories -> name}}</option>
                     
                 @endforeach
             </select>
@@ -62,7 +62,7 @@
                 </div>
                 <br>
     
-    <button type="submit" name ="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" name ="submit" class="btn btn-primary">Update</button>
 </form>
 </div>
 </main>
