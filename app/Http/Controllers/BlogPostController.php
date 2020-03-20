@@ -51,7 +51,7 @@ class BlogPostController extends Controller
                 if($ext =='jpg' || $ext == 'png'){
                     if($photo ->move(public_path(), $fileName)){
                         $blogPost = BlogPost::find($blogPost -> id);
-                        $blogPost-> featured_image_url = url('/').'/'.$fileName;
+                        $blogPost-> featured_image_url = url('/').'/public/'.$fileName;
                         $blogPost->save();
                     }
                 }
@@ -107,7 +107,7 @@ class BlogPostController extends Controller
                 if($ext =='jpg' || $ext == 'png'){
                     if($photo ->move(public_path(), $fileName)){
                         $blogPost = BlogPost::find($blogPost -> id);
-                        $blogPost-> featured_image_url = url('/').'/'.$fileName;
+                        $blogPost-> featured_image_url = url('/').'/public/'.$fileName;
                         $blogPost->save();
                     }
                 }
